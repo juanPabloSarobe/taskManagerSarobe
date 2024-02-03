@@ -1,1 +1,2 @@
 npm install react-native-get-random-values
+npm install @react-native-community/checkbox --save

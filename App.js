@@ -5,6 +5,7 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import AddTask from "./src/components/AddTask";
 import AddTaskButton from "./src/components/AddTaskButton";
+import TasksContainer from "./src/components/TasksContainer";
 
 import colors from "./src/utils/global/colors";
 
@@ -19,7 +20,7 @@ export default function App() {
     const task = {
       id: uuidv4(),
       title: taskTitle,
-      desciption: taskDescription,
+      description: taskDescription,
       createDate: new Date().toLocaleString(),
       updateDate: new Date().toLocaleString(),
       complete: false,
@@ -65,9 +66,6 @@ export default function App() {
         <Text style={styles.appTitle}>Bienvenidos al generador de Tareas</Text>
       </View>
       <View style={styles.container}>
-        {!creatingTask && (
-          <AddTaskButton onHandleCreatingTask={onHandleCreatingTask} />
-        )}
         {creatingTask && (
           <AddTask
             onHandlerTitle={onHandlerTitle}
@@ -78,6 +76,13 @@ export default function App() {
             cancelNewTask={cancelNewTask}
           />
         )}
+        {!creatingTask && (
+          <AddTaskButton onHandleCreatingTask={onHandleCreatingTask} />
+        )}
+        {!creatingTask && (
+          <TasksContainer tasks={tasks} screenWidth={screenWidth} />
+        )}
+
         <StatusBar style="auto" />
       </View>
     </View>
@@ -91,7 +96,7 @@ const styles = StyleSheet.create({
     flex: 9,
     backgroundColor: colors.bgSecondary,
     alignItems: "center",
-    paddingVertical: 25,
+    paddingVertical: 10,
   },
   appTitle: {
     marginTop: 45,

@@ -18,7 +18,7 @@ const AddTaskButton = ({ onHandleCreatingTask }) => {
 export default AddTaskButton;
 
 const styles = StyleSheet.create({
-  container: { width: "100%", height: 40 },
+  container: { width: "100%", height: 40, marginBottom: 15 },
 
   newCard: {
     flexDirection: "row",

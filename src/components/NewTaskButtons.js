@@ -12,7 +12,11 @@ const NewTaskButtons = ({
       <Button
         color={colors.bgWarning}
         onPress={cancelNewTask}
-        title={"Cancelar"}
+        title={
+          (taskTitle.length && taskDescription.length) <= 10
+            ? "  X  "
+            : "Cancelar"
+        }
       />
       {(taskTitle.length && taskDescription.length) > 10 && (
         <Button color={colors.bgSuccess} onPress={newTast} title={"Aceptar"} />
