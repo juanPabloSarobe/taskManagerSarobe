@@ -33,9 +33,9 @@ const TasksContainer = ({ tasks, screenWidth }) => {
             </View>
             <View style={styles.cardButtons}>
               <Switch
-                /* trackColor={{ false: "#767577", true: "#81b0ff" }}
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
                 thumbColor={isEnabled ? colors.textSecondary : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e" */
+                ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
                 value={isEnabled}
               />
