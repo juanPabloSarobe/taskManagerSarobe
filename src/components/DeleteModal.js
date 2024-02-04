@@ -25,7 +25,7 @@ const DeleteModal = ({
             </Text>
             <View style={styles.deleteButtons}>
               <Button
-                title="Aceptar"
+                title="Eliminar"
                 onPress={deleteTask}
                 color={colors.bgWarning}
               />
