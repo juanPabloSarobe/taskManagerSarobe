@@ -1,13 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import AddTask from "./src/components/AddTask";
 import AddTaskButton from "./src/components/AddTaskButton";
+import DeleteModal from "./src/components/DeleteModal";
 import TasksContainer from "./src/components/TasksContainer";
 
-import colors from "./src/utils/global/colors";
+import colors, { colores } from "./src/utils/global/colors";
 
 export default function App() {
   const screenWidth = Dimensions.get("window").width;
@@ -15,6 +16,8 @@ export default function App() {
   const [taskDescription, setTaskDescription] = useState("");
   const [tasks, setTasks] = useState([]);
   const [creatingTask, setcreatingTask] = useState(false);
+  const [deleteModalVisible, setdeleteModalVisible] = useState(false);
+  const [taskSelected, setTaskSelected] = useState({});
 
   const newTast = () => {
     const task = {
@@ -49,6 +52,33 @@ export default function App() {
     setTaskDescription(t);
   };
 
+  const updateCompleteTask = (id) => {
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === id)
+          return {
+            ...task,
+            ...{
+              complete: !task.complete,
+              updateDate: new Date().toLocaleString(),
+            },
+          };
+        return task;
+      })
+    );
+  };
+
+  const onHandleModal = (task) => {
+    setdeleteModalVisible(!deleteModalVisible);
+    setTaskSelected(task);
+  };
+
+  const deleteTask = () => {
+    setTasks(tasks.filter((task) => task.id != taskSelected.id));
+    setdeleteModalVisible(!deleteModalVisible);
+    setTaskSelected({});
+  };
+
   return (
     <View
       style={{
@@ -65,6 +95,7 @@ export default function App() {
       >
         <Text style={styles.appTitle}>Bienvenidos al generador de Tareas</Text>
       </View>
+
       <View style={styles.container}>
         {creatingTask && (
           <AddTask
@@ -80,9 +111,19 @@ export default function App() {
           <AddTaskButton onHandleCreatingTask={onHandleCreatingTask} />
         )}
         {!creatingTask && (
-          <TasksContainer tasks={tasks} screenWidth={screenWidth} />
+          <TasksContainer
+            tasks={tasks}
+            screenWidth={screenWidth}
+            updateCompleteTask={updateCompleteTask}
+            onHandleModal={onHandleModal}
+          />
         )}
-
+        <DeleteModal
+          deleteModalVisible={deleteModalVisible}
+          onHandleModal={onHandleModal}
+          taskSelected={taskSelected}
+          deleteTask={deleteTask}
+        />
         <StatusBar style="auto" />
       </View>
     </View>
